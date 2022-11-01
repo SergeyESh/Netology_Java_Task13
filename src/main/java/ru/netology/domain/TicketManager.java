@@ -6,7 +6,7 @@ public class TicketManager {
 
     private TicketRepository repository;
 
-    public TicketManager() {
+    public TicketManager(TicketRepository repository) {
         this.repository = repository;
     }
 
@@ -14,7 +14,7 @@ public class TicketManager {
         repository.save(ticket);
     }
 
-    public Ticket[] searchBy(String text) {
+    /*public Ticket[] searchBy(String text) {
         Ticket[] result = new Ticket[0];
         for (Ticket ticket: repository.getItems()) {
             if (matches(ticket, text)) {
@@ -24,7 +24,7 @@ public class TicketManager {
             }
         }
         return result;
-    }
+    }*/
 
     public Ticket[] findAll(String from, String to) {
         Ticket[] result = new Ticket[0];
@@ -33,7 +33,8 @@ public class TicketManager {
                 Ticket[] tmp = new Ticket[result.length + 1];
                 tmp[tmp.length - 1] = ticket;
                 result = tmp;
-            } else if (matches(ticket, from)) {
+            }
+            if (matches(ticket, to)) {
                 Ticket[] tmp = new Ticket[result.length + 1];
                 tmp[tmp.length - 1] = ticket;
                 result = tmp;

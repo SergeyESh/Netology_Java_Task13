@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class TicketManagerTest {
 
     TicketRepository repository = new TicketRepository();
-    TicketManager manager = new TicketManager();
+    TicketManager manager = new TicketManager(repository);
 
     Ticket ticket1 = new Ticket(1, 1299, "SVO", "KZN", 95);
     Ticket ticket2 = new Ticket(2, 2199, "VKO", "KZN", 95);
@@ -28,7 +28,7 @@ class TicketManagerTest {
     @Test
     void findAll() {
         Ticket[] expected = { ticket1, ticket4 };
-        Ticket[] actual = repository.getItems();
+        Ticket[] actual = manager.findAll("SVO", "KZN");
 
         Assertions.assertArrayEquals(expected, actual);
 
