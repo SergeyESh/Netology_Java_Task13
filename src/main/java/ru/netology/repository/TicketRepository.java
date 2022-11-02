@@ -27,16 +27,7 @@ public class TicketRepository {
         items = tmp;
     }
 
-    public Ticket findById(int id) {
-        for (Ticket ticket : getItems()) {
-            if (ticket.getId() == id) {
-                return ticket;
-            }
-        }
-        return null;
-    }
-
-    public Ticket[] getItems() {
+    public Ticket[] findAll() {
         return items;
     }
 }

@@ -2,6 +2,8 @@ package ru.netology.domain;
 
 import ru.netology.repository.TicketRepository;
 
+import java.util.Arrays;
+
 public class TicketManager {
 
     private TicketRepository repository;
@@ -14,42 +16,29 @@ public class TicketManager {
         repository.save(ticket);
     }
 
-    /*public Ticket[] searchBy(String text) {
-        Ticket[] result = new Ticket[0];
-        for (Ticket ticket: repository.getItems()) {
-            if (matches(ticket, text)) {
-                Ticket[] tmp = new Ticket[result.length + 1];
-                tmp[tmp.length - 1] = ticket;
-                result = tmp;
-            }
-        }
-        return result;
-    }*/
-
     public Ticket[] findAll(String from, String to) {
         Ticket[] result = new Ticket[0];
-        for (Ticket ticket: repository.getItems()) {
-            if (matches(ticket, from)) {
+        for (Ticket ticket: repository.findAll()) {
+            if (matches(ticket, from, to)) {
                 Ticket[] tmp = new Ticket[result.length + 1];
-                tmp[tmp.length - 1] = ticket;
-                result = tmp;
-            }
-            if (matches(ticket, to)) {
-                Ticket[] tmp = new Ticket[result.length + 1];
+                for (int i = 0; i < result.length; i++) {
+                    tmp [i] = result [i];
+                }
                 tmp[tmp.length - 1] = ticket;
                 result = tmp;
             }
         }
+        Arrays.sort(result);
         return result;
     }
 
-    public boolean matches(Ticket ticket, String search) {
-        if (ticket.getFrom().contains(search)) {
-            return true;
-        } else if (ticket.getTo().contains(search)) {
-            return true;
+    public boolean matches (Ticket ticket, String from, String to) {
+        if (!ticket.getFrom().equals(from)) {
+            return false;
         }
-        return false;
+        if (!ticket.getTo().equals(to)) {
+            return false;
+        }
+        return true;
     }
-
 }
