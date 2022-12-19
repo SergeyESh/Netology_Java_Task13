@@ -20,19 +20,44 @@ class TicketManagerTest {
     Ticket ticket4 = new Ticket(4, 200, "SVO", "KZN", 95);
     Ticket ticket5 = new Ticket(5, 500, "DME", "KZN", 95);
 
-    @BeforeEach
-    public void setup() {
+//    @BeforeEach
+//    public void setup() {
+//        manager.add(ticket1);
+//        manager.add(ticket2);
+//        manager.add(ticket3);
+//        manager.add(ticket4);
+//        manager.add(ticket5);
+//
+//    }
+
+    @Test
+    void shouldFindAll() {
         manager.add(ticket1);
         manager.add(ticket2);
         manager.add(ticket3);
         manager.add(ticket4);
         manager.add(ticket5);
+
+        Ticket [] expected = { ticket2, ticket4, ticket1, ticket3 };
+        Ticket [] actual = manager.findAll("SVO", "KZN");
+
+        Assertions.assertArrayEquals(expected, actual);
     }
 
     @Test
-    void findAll() {
+    void shouldFindOne() {
+        manager.add(ticket1);
 
-        Ticket [] expected = { ticket2, ticket4, ticket1, ticket3 };
+        Ticket [] expected = { ticket1 };
+        Ticket [] actual = manager.findAll("SVO", "KZN");
+
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    void shouldNotFind() {
+
+        Ticket [] expected = {};
         Ticket [] actual = manager.findAll("SVO", "KZN");
 
         Assertions.assertArrayEquals(expected, actual);
